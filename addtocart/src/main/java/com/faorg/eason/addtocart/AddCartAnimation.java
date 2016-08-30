@@ -28,27 +28,29 @@ public class AddCartAnimation {
         //新建一个ImageView 用于动画显示
         final ImageView view = new ImageView(mContext);
         //确定ImageView大小与传进来的ImageView相同
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(startView.getWidth(),startView.getHeight());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(startView.getWidth(), startView.getHeight());
         //获取ImageView的图片 并设置在新的ImageView上
         view.setImageDrawable(startView.getDrawable());
 
-
+        //计算父控件的位置
+        int[] parent = new int[2];
+        rl.getLocationInWindow(parent);
 
         //计算起点控件位置
         int[] startLocation = new int[2];
-        startView.getLocationOnScreen(startLocation);
+        startView.getLocationInWindow(startLocation);
 
         //计算终点控件位置
         int[] endLocation = new int[2];
-        endView.getLocationOnScreen(endLocation);
+        endView.getLocationInWindow(endLocation);
 
-        //确定ImageView与
-        params.leftMargin = startLocation[0];
-        params.topMargin = startLocation[1]-startView.getHeight();
+        //确定ImageView的位置与startView相同
+        params.leftMargin = startLocation[0] - parent[0] - rl.getPaddingLeft();
+        params.topMargin = startLocation[1] - parent[1] - rl.getPaddingTop();
         rl.addView(view, params);
 
         //计算两者的横向X轴的距离差
-        int XtoX = endLocation[0] - startLocation[0]+endView.getWidth()/2-startView.getWidth()/2;
+        int XtoX = endLocation[0] - startLocation[0] + endView.getWidth() / 2 - startView.getWidth() / 2;
         //根据距离 时间 获取到对应的X轴的初速度
         final float xv = XtoX / time;
 
