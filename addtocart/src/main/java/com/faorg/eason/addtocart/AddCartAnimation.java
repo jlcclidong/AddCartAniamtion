@@ -57,8 +57,12 @@ public class AddCartAnimation {
         //计算两者的横向X轴的距离差
         int YtoY = endLocation[1] - startLocation[1];
         //根据距离 时间 初始设置的Y轴初速度与X轴初速度相同 获取到竖直方向上的加速度
-        final float g = (YtoY + xv * time) / time / time * 2;
-
+        final float g;
+        if (xv>0) {
+            g = (YtoY + xv * time) / time / time * 2;
+        }else{
+            g = (YtoY - xv * time) / time / time * 2;
+        }
         ValueAnimator va = new ValueAnimator();
         va.setDuration(time * 1000);
         va.setObjectValues(new PointF(0, 0));
@@ -68,7 +72,12 @@ public class AddCartAnimation {
             public PointF evaluate(float v, PointF pointF, PointF t1) {
                 PointF point = new PointF();
                 point.x = v * xv * time;
-                point.y = g * (v * time) * (v * time) / 2 - xv * v * time;
+                if (xv>0) {
+                    point.y = g * (v * time) * (v * time) / 2 - xv * v * time;
+                }else {
+                    point.y = g * (v * time) * (v * time) / 2 + xv * v * time;
+
+                }
                 return point;
             }
         });

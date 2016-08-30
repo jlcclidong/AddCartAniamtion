@@ -15,9 +15,8 @@
         android:layout_height="wrap_content"/>
     <ImageView
         android:id="@+id/cart"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:src="@mipmap/cart"
+        android:layout_alignParentBottom="true"
         android:layout_width="70dp"
         android:layout_height="70dp" />
 </RelativeLayout>
